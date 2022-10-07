@@ -23,6 +23,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -138,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
             // Call prepare now so pressing play just works.
             mediaController.getTransportControls().prepare();
         }
+
+        @Override
+        protected void onDisconnected() {
+            super.onDisconnected();
+        }
     }
 
     /**
@@ -151,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private class MediaBrowserListener extends MediaControllerCompat.Callback {
         @Override
         public void onPlaybackStateChanged(PlaybackStateCompat playbackState) {
+            Log.i("jiang","playback state changed:"+playbackState);
             mIsPlaying = playbackState != null &&
                     playbackState.getState() == PlaybackStateCompat.STATE_PLAYING;
             mMediaControlsImage.setPressed(mIsPlaying);
@@ -158,9 +165,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onMetadataChanged(MediaMetadataCompat mediaMetadata) {
+            Log.i("jiang","client MediaMetadataCompat changed:"+mediaMetadata);
             if (mediaMetadata == null) {
                 return;
             }
+            Log.i("jiang","client MediaMetadataCompat changed:"+mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE));
             mTitleTextView.setText(
                     mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE));
             mArtistTextView.setText(
@@ -178,6 +187,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onQueueChanged(List<MediaSessionCompat.QueueItem> queue) {
             super.onQueueChanged(queue);
+        }
+
+        @Override
+        public void onQueueTitleChanged(CharSequence title) {
+            super.onQueueTitleChanged(title);
+        }
+
+        @Override
+        public void onSessionReady() {
+            super.onSessionReady();
+        }
+
+        @Override
+        public void onSessionEvent(String event, Bundle extras) {
+            super.onSessionEvent(event, extras);
         }
     }
 }

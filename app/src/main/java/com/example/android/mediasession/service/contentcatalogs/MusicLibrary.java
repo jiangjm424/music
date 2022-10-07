@@ -137,8 +137,9 @@ public class MusicLibrary {
                         .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, mediaId)
                         .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
                         .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, artist)
-                        .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,
-                                 TimeUnit.MILLISECONDS.convert(duration, durationUnit))
+//                        .putLong(MediaMetadataCompat.METADATA_KEY_DURATION,
+//                                 -1)
+                        .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI,"https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/01_-_Intro_-_The_Way_Of_Waking_Up_feat_Alan_Watts.mp3")
                         .putString(MediaMetadataCompat.METADATA_KEY_GENRE, genre)
                         .putString(
                                 MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI,
@@ -147,7 +148,8 @@ public class MusicLibrary {
                                 MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI,
                                 getAlbumArtUri(albumArtResName))
                         .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
-                        .build());
+                        .build()
+        );
         albumRes.put(mediaId, albumArtResId);
         musicFileName.put(mediaId, musicFilename);
     }
